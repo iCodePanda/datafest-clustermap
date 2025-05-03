@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,18 +25,49 @@
 
     var markers = L.markerClusterGroup();
 
-    var locations = [
-      [45.4215, -75.6998], 
-      [43.6532, -79.3832], 
-      [49.8951, -97.1384], 
-      [46.8139, -71.2080], 
-      [51.0486, -114.0708],
-      [53.5461, -113.4938],
-      [45.5017, -73.5673] 
-    ];
+    var cityData = {
+      "Atlanta": { coords: [33.7490, -84.3880], freq: 7739 },
+      "Austin": { coords: [30.2672, -97.7431], freq: 4997 },
+      "Baltimore": { coords: [39.2904, -76.6122], freq: 3957 },
+      "Boston": { coords: [42.3584, -71.0598], freq: 8236 },
+      "Charlotte": { coords: [35.2271, -80.8431], freq: 3363 },
+      "Chicago": { coords: [41.8500, -87.6501], freq: 5140 },
+      "Chicago Suburbs": { coords: [41.8500, -87.6501], freq: 6232 },
+      "Dallas/Ft Worth": { coords: [32.8975, -97.0404], freq: 15272 },
+      "Denver": { coords: [39.7392, -104.9847], freq: 8957 },
+      "Detroit": { coords: [42.3314, -83.0458], freq: 3531 },
+      "Houston": { coords: [29.7633, -95.3633], freq: 16014 },
+      "Los Angeles": { coords: [34.0500, -118.2500], freq: 15571 },
+      "Manhattan": { coords: [40.7127, -74.0059], freq: 16961 },
+      "Nashville": { coords: [36.1650, -86.7840], freq: 2534 },
+      "Northern New Jersey": { coords: [40.7915, -74.2624], freq: 4809 },
+      "Northern Virginia": { coords: [38.8258, -77.2046], freq: 6086 },
+      "Orange County": { coords: [33.7175, -117.8311], freq: 7196 },
+      "Philadelphia": { coords: [39.9526, -75.1652], freq: 4406 },
+      "Phoenix": { coords: [33.4484, -112.0740], freq: 7379 },
+      "Raleigh/Durham": { coords: [35.7796, -78.6382], freq: 2375 },
+      "Salt Lake City": { coords: [40.7608, -111.8910], freq: 1763 },
+      "San Diego": { coords: [32.7157, -117.1611], freq: 6326 },
+      "San Francisco": { coords: [37.7749, -122.4194], freq: 3574 },
+      "Seattle": { coords: [47.6062, -122.3321], freq: 5344 },
+      "South Bay/San Jose": { coords: [37.3382, -121.8863], freq: 3401 },
+      "South Florida": { coords: [26.1224, -80.1373], freq: 11919 },
+      "Southern Maryland": { coords: [38.3032, -76.5073], freq: 2736 },
+      "Tampa": { coords: [27.9506, -82.4572], freq: 4803 },
+      "Washington D.C.": { coords: [38.9072, -77.0369], freq: 4064 }
+    };
 
-    locations.forEach(function (loc) {
-      markers.addLayer(L.marker(loc));
+
+    Object.keys(cityData).forEach(function(city) {
+      var data = cityData[city];
+
+      // Add 'freq' number of markers at the same coordinate
+      for (var i = 0; i < data.freq; i++) {
+        var marker = L.marker(data.coords).bindPopup(
+          "<strong>" + city + "</strong><br>Frequency: " + data.freq
+        );
+        markers.addLayer(marker);
+      }
     });
 
     map.addLayer(markers);
